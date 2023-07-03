@@ -132,18 +132,23 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\DSP\BiquadProcessing.cpp" />
-    <ClCompile Include="..\..\Source\DSP\BiquadUnit.cpp" />
+    <ClCompile Include="..\..\Source\DSP\FineDynProcessing.cpp" />
     <ClCompile Include="..\..\Source\DSP\Parameters.cpp" />
+    <ClCompile Include="..\..\Source\GUI\Background.cpp" />
+    <ClCompile Include="..\..\Source\GUI\ControlManager.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\CustomLabel.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\LatchButton.cpp" />
+    <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\RotaryDial.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Buttons\EngageButton.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\BandwidthDial.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\FrequencyDial.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\GainDial.cpp" />
+    <ClCompile Include="..\..\Source\GUI\Controls\Dials\RatioDial.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Labels\StaticLabel.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Labels\TitleLabel.cpp" />
+    <ClCompile Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.cpp" />
+    <ClCompile Include="..\..\Source\GUI\LookAndFeels\CustomLookAndFeel.cpp" />
     <ClCompile Include="..\..\Source\PluginProcessor.cpp" />
     <ClCompile Include="..\..\Source\PluginEditor.cpp" />
     <ClCompile Include="..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
@@ -2440,19 +2445,24 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\DSP\BiquadProcessing.h" />
-    <ClInclude Include="..\..\Source\DSP\BiquadUnit.h" />
+    <ClInclude Include="..\..\Source\DSP\FineDynProcessing.h" />
     <ClInclude Include="..\..\Source\DSP\Parameters.h" />
+    <ClInclude Include="..\..\Source\GUI\Background.h" />
+    <ClInclude Include="..\..\Source\GUI\ControlManager.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomControlBase.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomLabel.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LatchButton.h" />
+    <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\RotaryDial.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Buttons\EngageButton.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\BandwidthDial.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\FrequencyDial.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\GainDial.h" />
+    <ClInclude Include="..\..\Source\GUI\Controls\Dials\RatioDial.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Labels\StaticLabel.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Labels\TitleLabel.h" />
+    <ClInclude Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.h" />
+    <ClInclude Include="..\..\Source\GUI\LookAndFeels\CustomLookAndFeel.h" />
     <ClInclude Include="..\..\Source\PluginProcessor.h" />
     <ClInclude Include="..\..\Source\PluginEditor.h" />
     <ClInclude Include="..\..\..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.h" />

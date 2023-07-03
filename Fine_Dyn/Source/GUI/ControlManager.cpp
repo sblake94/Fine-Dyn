@@ -1,7 +1,7 @@
 #include "ControlManager.h"
 
-#include "../Processing/Parameters.h"
-#include "../GUI/CustomLookAndFeel.h"
+#include "../DSP/Parameters.h"
+#include "../GUI/LookAndFeels/CustomLookAndFeel.h"
 
 namespace GUI
 {
@@ -20,30 +20,15 @@ namespace GUI
 	)
 		: m_controlAreaHeight(_windowHeight - 2 * m_margin)
 		, m_controlAreaWidth(_windowWidth - 2 * m_margin)
+		
+		, m_thresholdSlider(-96, 6, 0.01f, 0.0f, "Threshold", 0, 0, 2, 5, DSP::s_thresholdParamID, true, _lookAndFeelPtr)
+		, m_ratioDial("Ratio", 2, 0, 2, 2, DSP::s_ratioParamID, 1.5f, 1.0f, 8.0f, 0.01f, _lookAndFeelPtr)
 
-		, m_lowShelfBypass("Low Shelf", 0, 0, 2, 1, Processing::s_lowBandBypassParamID, true, _lookAndFeelPtr)
-		, m_midShelfBypass("Mid Shelf", 2, 0, 2, 1, Processing::s_midBandBypassParamID, true, _lookAndFeelPtr)
-		, m_highShelfBypass("High Shelf", 4, 0, 2, 1, Processing::s_highBandBypassParamID, true, _lookAndFeelPtr)
+		, m_masterBypassButton("Bypass", 8, 4, 2, 1, DSP::s_masterBypassParamID, false, _lookAndFeelPtr)
+		, m_masterGainSlider("Output Gain", 8, 5, 2, 2, DSP::s_masterGainParamID, 0.0f, -12.0f, 12.0f, 0.0f, _lookAndFeelPtr)
 
-		, m_lowFreqSlider("Freq", 0, 1, 2, 2, Processing::s_lowFreqCutoffParamID, 50.0f, 5.0f, 500.0f, 0.01f, _lookAndFeelPtr)
-		, m_midFreqSlider("Freq", 2, 1, 2, 2, Processing::s_midFreqCutoffParamID, 1000.0f, 100.0f, 10000.0f, 0.01f, _lookAndFeelPtr)
-		, m_highFreqSlider("Freq", 4, 1, 2, 2, Processing::s_highFreqCutoffParamID, 2000.0f, 200.0f, 20000.0f, 0.01f, _lookAndFeelPtr)
-
-		, m_lowGainSlider("Gain", 0, 3, 2, 2, Processing::s_lowGainParamID, 0.0f, -6.0f, 6.0f, 0.0f, _lookAndFeelPtr)
-		, m_midGainSlider("Gain", 2, 3, 2, 2, Processing::s_midGainParamID, 0.0f, -6.0f, 6.0f, 0.0f, _lookAndFeelPtr)
-		, m_highGainSlider("Gain", 4, 3, 2, 2, Processing::s_highGainParamID, 0.0f, -6.0f, 6.0f, 0.0f, _lookAndFeelPtr)
-
-		, m_lowBandwidthSlider("BW", 0, 5, 2, 2, Processing::s_lowBandwidthParamID, 1.0f, 0.01f, 4.0f, 0.01f, _lookAndFeelPtr)
-		, m_midBandwidthSlider("BW", 2, 5, 2, 2, Processing::s_midBandwidthParamID, 1.0f, 0.01f, 4.0f, 0.01f, _lookAndFeelPtr)
-		, m_highBandwidthSlider("BW", 4, 5, 2, 2, Processing::s_highBandwidthParamID, 1.0f, 0.01f, 4.0f, 0.01f, _lookAndFeelPtr)
-
-		, m_engageHeatButton("Heat", 6, 4, 2, 1, Processing::s_engageHeatParamID, false, _lookAndFeelPtr)
-		, m_heatGainSlider("Heat Gain", 6, 5, 2, 2, Processing::s_heatGainParamID, 0.0f, -12.0f, 12.0f, 0.0f, _lookAndFeelPtr)
-		, m_masterBypassButton("Bypass", 8, 4, 2, 1, Processing::s_masterBypassParamID, false, _lookAndFeelPtr)
-		, m_masterGainSlider("Output Gain", 8, 5, 2, 2, Processing::s_masterGainParamID, 0.0f, -12.0f, 12.0f, 0.0f, _lookAndFeelPtr)
-
-		, m_hotTitleLabel("HOT", 6, 0, 4, 2, Processing::s_NULL_PARAM_ID, CustomLookAndFeel::s_colour_burningOrange, _lookAndFeelPtr)
-		, m_shelfTitleLabel("SHELF", 6, 1, 4, 3, Processing::s_NULL_PARAM_ID, juce::Colours::white, _lookAndFeelPtr)
+		, m_fineTitleLabel("FINE", 6, 0, 4, 2, DSP::s_NULL_PARAM_ID, LookAndFeels::CustomLookAndFeel::s_colour_brightAccent, _lookAndFeelPtr)
+		, m_dynTitleLabel("DYNA", 6, 1, 4, 2, DSP::s_NULL_PARAM_ID, LookAndFeels::CustomLookAndFeel::s_textColourBrightT, _lookAndFeelPtr)
 	{
 	}
 
@@ -62,78 +47,78 @@ namespace GUI
 	void ControlManager::paint(juce::Graphics& _graphics)
 	{
 		// check that the window size is not zero
+		if (m_controlAreaHeight == 0 || m_controlAreaWidth == 0)
+		{
+			return;
+		}
 
-		
-		if (DEBUG && false)
+		if(false)
+			DEBUG_DrawGrid(_graphics);
+		else
+			DrawControlGroupPanels(_graphics);
+	}
+
+	void ControlManager::DEBUG_DrawGrid(juce::Graphics& _graphics)
+	{
+		if (DEBUG)
 		{
 			// draw the outline
 			juce::Rectangle<int> controlAreaBounds = juce::Rectangle<int>(m_margin, m_margin, m_controlAreaWidth, m_controlAreaHeight);
-			_graphics.setColour(GUI::CustomLookAndFeel::s_colour_burningOrange);
+			_graphics.setColour(GUI::LookAndFeels::CustomLookAndFeel::s_colour_brightAccent.withAlpha(0.25f));
 			_graphics.drawRect(controlAreaBounds, 1.0f);
 
 			BoundsGrid grid = GenerateGridOfBounds();
 			for (auto column : grid)
 			{
-				for (auto cell : column) 
+				for (auto cell : column)
 				{
-					_graphics.setColour(juce::Colours::white.withMultipliedAlpha(0.5f));
-					_graphics.drawRect(cell, 1.0f);
+					_graphics.setColour(juce::Colours::black.withMultipliedAlpha(0.2f));
+					_graphics.fillRect(cell.toFloat());
 				}
+			}
+
+			for (auto control : GetAllCustomControls())
+			{
+				auto bounds = control->getBounds();
+
+				_graphics.fillRect(bounds);
 			}
 		}
+	}
 
-		// Draw control groups
-		if (true)
+	void ControlManager::DrawControlGroupPanels(juce::Graphics& _graphics)
+	{
+		for (std::vector<juce::Component*> ctrlGroup : GetControlGroups())
 		{
-			for (std::vector<juce::Component*> ctrlGroup : GetControlGroups())
+			// Get the collective bounds of each control in the group
+			juce::Rectangle<int> ctrlGroupBounds = juce::Rectangle<int>(0, 0, 0, 0);
+			for (juce::Component* component : ctrlGroup)
 			{
-				// Get the collective bounds of each control in the group
-				juce::Rectangle<int> ctrlGroupBounds = juce::Rectangle<int>(0,0,0,0);
-				for (juce::Component* component : ctrlGroup)
-				{
-					const juce::Rectangle<int> componentBounds = component->getBounds();
-					ctrlGroupBounds = ctrlGroupBounds.getUnion(componentBounds);
-				}
-
-				auto woodBorder = ctrlGroupBounds.expanded(
-					GUI::CustomLookAndFeel::s_controlBoundsMargin, 
-					GUI::CustomLookAndFeel::s_controlBoundsMargin);
-
-
-				juce::Colour woodCol = 
-					GUI::CustomLookAndFeel::Darken(
-					GUI::CustomLookAndFeel::s_colour_dustyOrange
-					);
-
-				_graphics.setColour(woodCol);
-				_graphics.fillRoundedRectangle(woodBorder.toFloat(), GUI::CustomLookAndFeel::s_cornerRadius);
-				_graphics.setColour(GUI::CustomLookAndFeel::s_shadowColour);
-				_graphics.drawRoundedRectangle(woodBorder.toFloat()
-								, GUI::CustomLookAndFeel::s_cornerRadius
-								, GUI::CustomLookAndFeel::s_outlineThickness);
-
-
-				// Draw the shadow
-				if (GUI::CustomLookAndFeel::s_useDropShadows)
-				{
-					juce::Path shadowPath;
-					shadowPath.addRoundedRectangle(ctrlGroupBounds.toFloat(), GUI::CustomLookAndFeel::s_cornerRadius);
-					GUI::CustomLookAndFeel::s_panelShadow.drawForPath(_graphics, shadowPath);
-				}
-
-				// Draw the control group
-				_graphics.setGradientFill(
-					GUI::CustomLookAndFeel::BackgroundGradient(
-						ctrlGroupBounds.getTopLeft().toFloat(),
-						ctrlGroupBounds.getBottomRight().toFloat()
-					));
-				_graphics.fillRoundedRectangle(ctrlGroupBounds.toFloat(), GUI::CustomLookAndFeel::s_cornerRadius);
-
-				_graphics.setColour(GUI::CustomLookAndFeel::s_shadowColour);
-				_graphics.drawRoundedRectangle(ctrlGroupBounds.toFloat()
-					, GUI::CustomLookAndFeel::s_cornerRadius
-					, GUI::CustomLookAndFeel::s_outlineThickness);
+				const juce::Rectangle<int> componentBounds = component->getBounds();
+				ctrlGroupBounds = ctrlGroupBounds.getUnion(componentBounds);
 			}
+
+			//auto woodBorder = ctrlGroupBounds.expanded(
+			//	GUI::LookAndFeels::CustomLookAndFeel::s_controlBoundsMargin,
+			//	GUI::LookAndFeels::CustomLookAndFeel::s_controlBoundsMargin);
+
+			//juce::Colour woodCol =
+			//	GUI::LookAndFeels::CustomLookAndFeel::Darken(
+			//		GUI::LookAndFeels::CustomLookAndFeel::s_colour_dustyAccent
+			//	);
+
+			//_graphics.setColour(woodCol);
+			//_graphics.fillRoundedRectangle(woodBorder.toFloat(), GUI::LookAndFeels::CustomLookAndFeel::s_cornerRadius);
+
+			// Draw the control group
+			Path panelPath;
+			panelPath.addRoundedRectangle(ctrlGroupBounds.toFloat(), GUI::LookAndFeels::CustomLookAndFeel::s_cornerRadius);
+			GUI::LookAndFeels::CustomLookAndFeel::s_darkShadow.drawForPath(_graphics, panelPath);
+			GUI::LookAndFeels::CustomLookAndFeel::s_lightShadow.drawForPath(_graphics, panelPath);
+
+
+			_graphics.setColour(GUI::LookAndFeels::CustomLookAndFeel::s_fillColorA);
+			_graphics.fillPath(panelPath);
 		}
 	}
 
@@ -188,6 +173,23 @@ namespace GUI
 			latchButton->setBounds(bounds);
 		}
 
+		for (GUI::Controls::BaseTypes::LinearSlider* LinearSliders : GetAllLinearSliders())
+		{
+			juce::Point<int>& topLeft = m_boundsGrid
+				[LinearSliders->m_xPos]
+				[LinearSliders->m_yPos]
+				.getTopLeft();
+
+			juce::Point<int>& bottomRight = m_boundsGrid
+				[LinearSliders->m_xPos + LinearSliders->m_width - 1]
+				[LinearSliders->m_yPos + LinearSliders->m_height - 1]
+				.getBottomRight();
+
+			juce::Rectangle<int> bounds = juce::Rectangle<int>(topLeft, bottomRight);
+
+			LinearSliders->setBounds(bounds);
+		}
+
 		for (GUI::Controls::BaseTypes::CustomLabel* customLabel : GetAllCustomLabels())
 		{
 			juce::Point<int>& topLeft = m_boundsGrid
@@ -206,27 +208,30 @@ namespace GUI
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/// <summary>
-	/// Returns a vector of pointers to all controls.
+	/// Returns a vector of pointers to all dials.
 	/// </summary>
 	/// <returns>Vector of Component*</returns>
 	const std::vector<BaseTypes::RotaryDial*> ControlManager::GetAllRotaryDials()
 	{
 		std::vector<BaseTypes::RotaryDial*> result;
 
-		result.push_back(&m_lowFreqSlider);
-		result.push_back(&m_midFreqSlider);
-		result.push_back(&m_highFreqSlider);
-
-		result.push_back(&m_lowGainSlider);
-		result.push_back(&m_midGainSlider);
-		result.push_back(&m_highGainSlider);
-
-		result.push_back(&m_lowBandwidthSlider);
-		result.push_back(&m_midBandwidthSlider);
-		result.push_back(&m_highBandwidthSlider);
-
 		result.push_back(&m_masterGainSlider);
-		result.push_back(&m_heatGainSlider);
+		result.push_back(&m_ratioDial);
+
+		return result;
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	/// <summary>
+	/// Returns a vector of pointers to all controls.
+	/// </summary>
+	/// <returns>Vector of Component*</returns>
+	const std::vector<BaseTypes::LinearSlider*> ControlManager::GetAllLinearSliders()
+	{
+		std::vector<BaseTypes::LinearSlider*> result;
+
+		result.push_back(&m_thresholdSlider);
+
 
 		return result;
 	}
@@ -240,12 +245,7 @@ namespace GUI
 	{
 		std::vector<BaseTypes::LatchButton*> result;
 
-		result.push_back(&m_engageHeatButton);
 		result.push_back(&m_masterBypassButton);
-
-		result.push_back(&m_lowShelfBypass);
-		result.push_back(&m_midShelfBypass);
-		result.push_back(&m_highShelfBypass);
 
 		return result;
 	}
@@ -254,8 +254,8 @@ namespace GUI
 	{
 		std::vector<BaseTypes::CustomLabel*> result;
 
-		result.push_back(&m_hotTitleLabel);
-		result.push_back(&m_shelfTitleLabel);
+		result.push_back(&m_fineTitleLabel);
+		result.push_back(&m_dynTitleLabel);
 
 		return result;
 	}
@@ -284,6 +284,11 @@ namespace GUI
 			result.push_back(dynamic_cast<juce::Component*>(customLabelPtr));
 		}
 
+		for (BaseTypes::LinearSlider* linearSliderPtr : GetAllLinearSliders())
+		{
+			result.push_back(dynamic_cast<juce::Component*>(linearSliderPtr));
+		}
+
 		return result;
 	}
 
@@ -296,31 +301,11 @@ namespace GUI
 	{
 		std::vector<std::vector<juce::Component*>> result;
 
-		// Low Shelf
+		// Compressor
 		result.push_back(std::vector<juce::Component*>
 		{
-			dynamic_cast<juce::Component*>(&m_lowShelfBypass),
-			dynamic_cast<juce::Component*>(&m_lowFreqSlider),
-			dynamic_cast<juce::Component*>(&m_lowGainSlider),
-			dynamic_cast<juce::Component*>(&m_lowBandwidthSlider)
-		});
-
-		// Mid Shelf
-		result.push_back(std::vector<juce::Component*>
-		{
-			dynamic_cast<juce::Component*>(&m_midShelfBypass),
-			dynamic_cast<juce::Component*>(&m_midFreqSlider),
-			dynamic_cast<juce::Component*>(&m_midGainSlider),
-			dynamic_cast<juce::Component*>(&m_midBandwidthSlider)
-		});
-
-		// High Shelf
-		result.push_back(std::vector<juce::Component*>
-		{
-			dynamic_cast<juce::Component*>(&m_highShelfBypass),
-			dynamic_cast<juce::Component*>(&m_highFreqSlider),
-			dynamic_cast<juce::Component*>(&m_highGainSlider),
-			dynamic_cast<juce::Component*>(&m_highBandwidthSlider)
+			dynamic_cast<juce::Component*>(&m_thresholdSlider),
+			dynamic_cast<juce::Component*>(&m_ratioDial)
 		});
 
 		// Master
@@ -329,11 +314,8 @@ namespace GUI
 			dynamic_cast<juce::Component*>(&m_masterBypassButton),
 			dynamic_cast<juce::Component*>(&m_masterGainSlider),
 
-			dynamic_cast<juce::Component*>(&m_engageHeatButton),
-			dynamic_cast<juce::Component*>(&m_heatGainSlider),
-
-			dynamic_cast<juce::Component*>(&m_hotTitleLabel),
-			dynamic_cast<juce::Component*>(&m_shelfTitleLabel)
+			dynamic_cast<juce::Component*>(&m_fineTitleLabel),
+			dynamic_cast<juce::Component*>(&m_dynTitleLabel)
 		});
 
 		return result;
@@ -351,7 +333,6 @@ namespace GUI
 		{
 			return m_boundsGrid;
 		}
-
 
 		const int cellWidth = (m_controlAreaWidth / m_controlGridSizeX);
 		const int cellHeight =	(m_controlAreaHeight / m_controlGridSizeY);

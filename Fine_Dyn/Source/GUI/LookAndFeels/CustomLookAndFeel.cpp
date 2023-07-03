@@ -1,43 +1,48 @@
 #include "CustomLookAndFeel.h"
 
+using namespace GUI::LookAndFeels;
+using namespace juce;
+
 // There is probably an inbuilt way to do this in JUCE, but I haven't found it yet.
-const juce::Colour GUI::CustomLookAndFeel::s_shadowColour			= juce::Colour::fromRGBA(000u,	000u,	000u,	150u);
-const juce::Colour GUI::CustomLookAndFeel::s_colour_burningOrange	= juce::Colour::fromRGBA(255u,	75u,	0u,		255u);
-const juce::Colour GUI::CustomLookAndFeel::s_colour_dustyOrange		= juce::Colour::fromRGBA(153u,	051u,	000u,	255u);
-const juce::Colour GUI::CustomLookAndFeel::s_colour_cyan			= juce::Colour::fromRGBA(000u,	204u,	255u,	255u);
-const juce::Colour GUI::CustomLookAndFeel::s_fillColorA				= juce::Colour::fromRGBA(051u,	051u,	051u,	255u);
-const juce::Colour GUI::CustomLookAndFeel::s_fillColorB				= juce::Colour::fromRGBA(034u,	034u,	034u,	255u);
+const Colour CustomLookAndFeel::s_lightShadowColour		= Colour::fromRGBA(255u,	255u,	255u,	255u);
+const Colour CustomLookAndFeel::s_darkShadowColour		= Colour::fromRGBA(000u,	000u,	000u,	255u);
 
-const juce::Colour GUI::CustomLookAndFeel::s_textColourBright		= juce::Colour::fromRGBA(255u,	255u,	255u,	255u);
-const juce::Colour GUI::CustomLookAndFeel::s_textColourBrightT		= juce::Colour::fromRGBA(255u,	255u,	255u,	125u);
-const juce::Colour GUI::CustomLookAndFeel::s_textColourDark			= juce::Colour::fromRGBA(000u,	000u,	000u,	255u);
-const juce::Colour GUI::CustomLookAndFeel::s_textColourDarkT		= juce::Colour::fromRGBA(000u,	000u,	000u,	125u);
+const Colour CustomLookAndFeel::s_colour_brightAccent		= Colour::fromRGBA(000u,	204u,	255u,	255u);
+const Colour CustomLookAndFeel::s_colour_dustyAccent		= Colour::fromRGBA(000u,	051u,	153u,	255u);
+const Colour CustomLookAndFeel::s_colour_cyan				= Colour::fromRGBA(000u,	204u,	255u,	255u);
+const Colour CustomLookAndFeel::s_fillColorA				= Colour::fromRGBA(050u,	051u,	052u,	255u);
+const Colour CustomLookAndFeel::s_fillColorB				= Colour::fromRGBA(033u,	034u,	035u,	255u);
 
-const juce::Font   GUI::CustomLookAndFeel::s_labelFont = juce::Font("Montserrat", 16, juce::Font::plain);
-const juce::Font   GUI::CustomLookAndFeel::s_titleFont = juce::Font("Devil Breeze", 48, juce::Font::bold);
+const Colour CustomLookAndFeel::s_textColourBright			= Colour::fromRGBA(255u,	255u,	255u,	255u);
+const Colour CustomLookAndFeel::s_textColourBrightT			= Colour::fromRGBA(255u,	255u,	255u,	125u);
+const Colour CustomLookAndFeel::s_textColourDark			= Colour::fromRGBA(000u,	000u,	000u,	255u);
+const Colour CustomLookAndFeel::s_textColourDarkT			= Colour::fromRGBA(000u,	000u,	000u,	125u);
 
-const float GUI::CustomLookAndFeel::s_cornerRadius = 7.0f;
-const float GUI::CustomLookAndFeel::s_dialIndicatorThickness = 2.0f; 
-const float GUI::CustomLookAndFeel::s_outlineThickness = 2.0f;
-const float GUI::CustomLookAndFeel::s_controlBoundsMargin = 5.0f;
+const Font   CustomLookAndFeel::s_labelFont = Font("Montserrat", 16, Font::plain);
+const Font   CustomLookAndFeel::s_titleFont = Font("Devil Breeze", 48, Font::bold);
 
-const juce::DropShadow GUI::CustomLookAndFeel::s_dialShadow = juce::DropShadow(
-		GUI::CustomLookAndFeel::s_shadowColour, 16, juce::Point<int>(9, 9));
+const float CustomLookAndFeel::s_cornerRadius = 7.0f;
+const float CustomLookAndFeel::s_dialIndicatorThickness = 2.0f;
+const float CustomLookAndFeel::s_outlineThickness = 2.0f;
+const float CustomLookAndFeel::s_controlBoundsMargin = 5.0f;
 
-const juce::DropShadow GUI::CustomLookAndFeel::s_buttonShadow = juce::DropShadow(
-		GUI::CustomLookAndFeel::s_shadowColour, 1, juce::Point<int>(0, 0));
+const DropShadow CustomLookAndFeel::s_lightShadow = DropShadow(
+	CustomLookAndFeel::Lighten(s_fillColorA), 8, Point<int>(-5, -5));
 
-const juce::DropShadow GUI::CustomLookAndFeel::s_panelShadow = juce::DropShadow(
-		GUI::CustomLookAndFeel::s_shadowColour, 16, juce::Point<int>(9, 9));
+const DropShadow CustomLookAndFeel::s_darkShadow = DropShadow(
+	CustomLookAndFeel::Darken(s_fillColorA), 8, Point<int>(5, 5));
 
-const bool GUI::CustomLookAndFeel::s_useDropShadows = true;
+const DropShadow CustomLookAndFeel::s_panelShadow = DropShadow(
+	s_lightShadowColour, 16, Point<int>(9, 9));
+
+const bool CustomLookAndFeel::s_useDropShadows = true;
 
 
 /////////////////////////////////////////////////
 /// <summary>
 /// Constructor for the custom look and feel
 /// </summary>
-GUI::CustomLookAndFeel::CustomLookAndFeel()
+CustomLookAndFeel::CustomLookAndFeel()
 {
 }
 
@@ -45,7 +50,7 @@ GUI::CustomLookAndFeel::CustomLookAndFeel()
 /// <summary>
 /// Destructor for the custom look and feel
 /// </summary>
-GUI::CustomLookAndFeel::~CustomLookAndFeel()
+CustomLookAndFeel::~CustomLookAndFeel()
 {
 
 }
@@ -63,9 +68,9 @@ GUI::CustomLookAndFeel::~CustomLookAndFeel()
 /// <param name="rotaryStartAngle">The start of the rotational track</param>
 /// <param name="rotaryEndAngle">The end of the rotational track</param>
 /// <param name="slider">The Slider itself</param>
-void GUI::CustomLookAndFeel::drawRotarySlider
+void CustomLookAndFeel::drawRotarySlider
 (
-	juce::Graphics& g, 
+	Graphics& g, 
 	int x, 
 	int y, 
 	int width, 
@@ -73,134 +78,146 @@ void GUI::CustomLookAndFeel::drawRotarySlider
 	float sliderPos, 
 	const float rotaryStartAngle, 
 	const float rotaryEndAngle, 
-	juce::Slider& slider
+	Slider& slider
 )
 {
-	auto bounds = slider.getLocalBounds().reduced(GUI::CustomLookAndFeel::s_controlBoundsMargin);
+	auto bounds = slider.getLocalBounds().reduced(s_controlBoundsMargin);
 
-	float sliderDefaultPos = 0;
-
-	auto currentAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
-	auto restingPointAngle = rotaryStartAngle + sliderDefaultPos * (rotaryEndAngle - rotaryStartAngle);
-
-	// draw the pie
-	juce::Path piePath;
-
-	// get a perfect square that fits in bounds
-	auto pieBounds = bounds.withSizeKeepingCentre(
-		juce::jmin(bounds.getWidth(), bounds.getHeight()), 
-		juce::jmin(bounds.getWidth(), bounds.getHeight()))
-		.reduced(15.0f);
-		
-	piePath.addPieSegment(pieBounds.toFloat(), rotaryStartAngle, currentAngle, 0.0f);
-	g.setColour(GUI::CustomLookAndFeel::s_colour_burningOrange);
-	g.fillPath(piePath);
-
-	piePath.clear();
-	g.setColour(GUI::CustomLookAndFeel::s_shadowColour);
-	piePath.addPieSegment(pieBounds.toFloat(), currentAngle, rotaryEndAngle, 0.0f);
-	g.fillPath(piePath);
-
-	bounds.reduce(GUI::CustomLookAndFeel::s_controlBoundsMargin, GUI::CustomLookAndFeel::s_controlBoundsMargin);
-
-	auto radius = juce::jmin(bounds.getWidth(), bounds.getHeight()) / 3.5f;
+	Path dialBody;
+	auto radius = jmin(bounds.getWidth(), bounds.getHeight()) / 2.5f;
 	auto centreX = bounds.getCentreX();
 	auto centreY = bounds.getCentreY();
 	auto rx = centreX - radius;
 	auto ry = centreY - radius;
 	auto rw = radius * 2.0f;
+	auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+	float trackthickness = 0.25f;
 
-	juce::Path dialPath;
-	dialPath.addEllipse(rx, ry, rw, rw);
+	// Draw the dial body
+	dialBody.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, 1.0f / (trackthickness + 1.0f));
+	g.setColour(Lighten(s_fillColorA));
+	g.fillPath(dialBody);
 
-	if (s_useDropShadows)
-	{
-		// draw a drop shadow for the dial, originating from the top left corner
-		s_dialShadow.drawForPath(g, dialPath);
-	}
+	// Draw the dial indicator
+	Path dialIndicator;
+	dialIndicator.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, angle, 1.0f / (trackthickness + 1.0f));
+	g.setColour(s_colour_brightAccent);
+	g.fillPath(dialIndicator);
 
-	// fill
-	juce::ColourGradient gradFill = BackgroundGradient(juce::Point<float>(rx, ry), bounds.getBottomRight().toFloat());
-	g.setGradientFill(gradFill);
-	g.fillEllipse(rx, ry, rw, rw);
+	// Draw the dial name
+	g.setColour(s_textColourBrightT);
+	g.setFont(s_labelFont);
+	g.drawText(slider.getName(), bounds, Justification::centredBottom, true);
 
-	// indicator
-	juce::Path p;
-	auto pointerLength = radius * 0.33f;
-	// lotta magic numbers here, let's do better
-	p.addRoundedRectangle(-s_dialIndicatorThickness * 0.5f, -radius, s_dialIndicatorThickness, 10.0f, 2.0f);
-	p.applyTransform(juce::AffineTransform::rotation(currentAngle).translated(centreX, centreY));
-
-	g.setColour(s_colour_burningOrange);
-	g.fillPath(p);
-
-	// outline
-	g.setColour(s_shadowColour);
-	g.drawEllipse(rx, ry, rw, rw, s_outlineThickness);
+	// Draw the dial value
+	g.setColour(s_textColourBright);
+	g.setFont(s_labelFont);
+	g.drawText(slider.getTextFromValue(slider.getValue()), bounds, Justification::centred, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void GUI::CustomLookAndFeel::drawToggleButton
+void CustomLookAndFeel::drawToggleButton
 (
-	juce::Graphics& g, 
-	juce::ToggleButton& button, 
+	Graphics& g, 
+	ToggleButton& button, 
 	bool shouldDrawButtonAsHighlighted, 
 	bool shouldDrawButtonAsDown
 )
 {
-	// draw the background behind the button text
-	const juce::Rectangle<int> buttonArea = button.getLocalBounds().reduced(s_controlBoundsMargin * 3, s_controlBoundsMargin);
-	juce::Path buttonPath;
-	buttonPath.addRoundedRectangle(buttonArea.toFloat(), s_cornerRadius);
-	
+	// Draw the button body
+	auto bounds = button.getLocalBounds().reduced(s_controlBoundsMargin);
 
-	// Shadow for the button
-	if (s_useDropShadows)
-	{
-		buttonPath.addRoundedRectangle(buttonArea.toFloat(), s_cornerRadius);
-		s_buttonShadow.drawForPath(g, buttonPath);
-	}
+	Path buttonBodyPath;
+	Rectangle<float> buttonBody = bounds.reduced(s_controlBoundsMargin).toFloat();
+	buttonBodyPath.addRoundedRectangle(buttonBody, s_cornerRadius);
+	g.setColour(s_fillColorA);
+	g.fillPath(buttonBodyPath);
 
-	// Draw the button itself
-	const juce::ColourGradient gradFill = 
-		juce::ColourGradient(
-			s_fillColorA,
-			buttonArea.getTopLeft().toFloat(),
-			s_fillColorB,
-			buttonArea.getBottomRight().toFloat(),
-			true);
+	// Draw the button indicator
+	g.setColour(button.getToggleState() ? s_colour_brightAccent : Lighten(s_fillColorA));
+	g.drawRoundedRectangle(buttonBody, s_cornerRadius, s_outlineThickness);
 
-	g.setGradientFill(gradFill);
-	g.fillPath(buttonPath);
+	// Draw the button name
+	g.setColour(s_textColourBrightT);
+	g.setFont(s_labelFont);
+	g.drawText(button.getName(), bounds, Justification::centredBottom, true);
 
-	// draw the border around the button
-	const bool buttonState = button.getToggleState();
-	g.setColour(buttonState ? s_colour_burningOrange : s_shadowColour);
-	g.drawRoundedRectangle(buttonArea.toFloat().reduced(s_outlineThickness / 3.33f), s_cornerRadius, s_outlineThickness);
-
-	// Draw the text in the button
-	const juce::String buttonText = button.getButtonText();
+	// Draw the button value
 	g.setColour(s_textColourBright);
 	g.setFont(s_labelFont);
-	g.drawFittedText(buttonText, buttonArea, juce::Justification::centred, 2);
+	g.drawText(button.getButtonText(), bounds, Justification::centred, true);
 }
 
-juce::Colour GUI::CustomLookAndFeel::Lighten(juce::Colour _col)
+////////////////////////////////////////////////////////////////////////////////////////////////
+void CustomLookAndFeel::drawLinearSlider
+(
+	juce::Graphics& g,
+	int x, 
+	int y, 
+	int width, 
+	int height,
+	float sliderPos, 
+	float minSliderPos, 
+	float maxSliderPos,
+	const juce::Slider::SliderStyle style, 
+	juce::Slider& slider
+)
 {
-	auto H = _col.getHue();
-	auto S = juce::jmax(0.0f, _col.getSaturation() - 0.05f);
-	auto L = juce::jmin(1.0f, _col.getLightness() * 1.5f);
+	// Draw the vertical slider track
+	Rectangle<float> bounds = slider.getLocalBounds().reduced(s_controlBoundsMargin).toFloat();
+	Rectangle<float> trackArea = bounds;
+	trackArea.setWidth(5.0f);
+	trackArea.setHeight(bounds.getHeight() - (3.0f * s_labelFont.getHeight()));
+	trackArea.setCentre(bounds.getCentre());
 
-	return juce::Colour::fromHSL(H, S, L, 1.0f);
+	Colour trackColour = Lighten(s_fillColorA);
+	g.setColour(trackColour);
+	g.fillRect(trackArea);
+
+	float val = slider.getValue();
+	float range = slider.getMaximum() - slider.getMinimum();
+	float pos = 1.0f - ((val - slider.getMinimum()) / range);
+
+	// Fill the lower portion of the track to indicate the value
+	Rectangle<float> fillArea = trackArea.withTrimmedTop(trackArea.getHeight() * pos);
+	g.setColour(s_colour_brightAccent);
+	g.fillRect(fillArea);
+
+	// Draw the slider name
+	g.setColour(s_textColourBrightT);
+	g.setFont(s_labelFont);
+	// TODO: MAGIC NUMBERS, PLEASE FIX
+	g.drawText(slider.getName(), 
+		bounds, 
+		Justification::centredBottom, true);
+
+
+	// Draw the slider value
+	g.setColour(s_textColourBright);
+	g.setFont(s_labelFont);
+	g.drawText(slider.getTextFromValue(
+		slider.getValue()), 
+		bounds, 
+		Justification::centredTop, 
+		true);
 }
 
-juce::Colour GUI::CustomLookAndFeel::Darken(juce::Colour _col)
+Colour CustomLookAndFeel::Lighten(Colour _col)
 {
 	auto H = _col.getHue();
-	auto S = juce::jmin(1.0f, _col.getSaturation() + 0.05f);
-	auto L = juce::jmax(0.0f, _col.getLightness() / 1.5f);
+	auto S = jmax(0.0f, _col.getSaturation() - 0.05f);
+	auto L = jmin(1.0f, _col.getLightness() * 1.5f);
 
-	return juce::Colour::fromHSL(H, S, L, 1.0f);
+	return Colour::fromHSL(H, S, L, 1.0f);
+}
+
+Colour CustomLookAndFeel::Darken(Colour _col)
+{
+	auto H = _col.getHue();
+	auto S = jmin(1.0f, _col.getSaturation() + 0.05f);
+	auto L = jmax(0.0f, _col.getLightness() / 1.5f);
+
+	return Colour::fromHSL(H, S, L, 1.0f);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,13 +226,13 @@ juce::Colour GUI::CustomLookAndFeel::Darken(juce::Colour _col)
 /// </summary>
 /// <param name="_innerPoint">The point where the gradient starts</param>
 /// <param name="_outerPoint">The point where the gradient ends</param>
-const juce::ColourGradient GUI::CustomLookAndFeel::BackgroundGradient
+const ColourGradient CustomLookAndFeel::BackgroundGradient
 (
-	juce::Point<float> _innerPoint, 
-	juce::Point<float> _outerPoint
+	Point<float> _innerPoint, 
+	Point<float> _outerPoint
 )
 {
-	return juce::ColourGradient(
+	return ColourGradient(
 		s_fillColorA,
 		_innerPoint,
 		s_fillColorB,

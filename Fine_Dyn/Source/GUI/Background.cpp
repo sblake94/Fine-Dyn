@@ -1,6 +1,6 @@
 #include "Background.h"
 
-#include "CustomLookAndFeel.h"
+#include "LookAndFeels/CustomLookAndFeel.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// <summary>
@@ -27,12 +27,7 @@ GUI::Background::~Background()
 /// <param name="height">: The height of the background.</param>
 void GUI::Background::paint(juce::Graphics& g, int width, int height)
 {
-	juce::ColourGradient gradient(
-		GUI::CustomLookAndFeel::s_fillColorB,
-		0, 0, 
-		GUI::CustomLookAndFeel::Darken(GUI::CustomLookAndFeel::s_fillColorB),
-		width, height, true);
+	g.setColour(GUI::LookAndFeels::CustomLookAndFeel::s_fillColorA);
 
-	g.setGradientFill(gradient);
 	g.fillRect(0, 0, width, height);
 }

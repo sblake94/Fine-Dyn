@@ -2,7 +2,7 @@
 
 #include <JuceHeader.h>
 
-namespace GUI
+namespace GUI::LookAndFeels
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary>
@@ -23,12 +23,17 @@ namespace GUI
 		void drawToggleButton(juce::Graphics& g, juce::ToggleButton& button, 
 			bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 
+		void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+			float sliderPos, float minSliderPos, float maxSliderPos,
+			const juce::Slider::SliderStyle style, juce::Slider& slider) override;
+
 		static juce::Colour Lighten(juce::Colour _col);
 		static juce::Colour Darken(juce::Colour _col);
 
-		static const juce::Colour s_shadowColour;
-		static const juce::Colour s_colour_burningOrange;
-		static const juce::Colour s_colour_dustyOrange;
+		static const juce::Colour s_lightShadowColour; 
+		static const juce::Colour s_darkShadowColour;
+		static const juce::Colour s_colour_brightAccent;
+		static const juce::Colour s_colour_dustyAccent;
 		static const juce::Colour s_colour_cyan;
 		static const juce::Colour s_textColourBright;
 		static const juce::Colour s_textColourBrightT;
@@ -40,8 +45,8 @@ namespace GUI
 		static const juce::Font s_labelFont;
 		static const juce::Font s_titleFont;
 
-		static const juce::DropShadow s_dialShadow;
-		static const juce::DropShadow s_buttonShadow;
+		static const juce::DropShadow s_lightShadow;
+		static const juce::DropShadow s_darkShadow;
 
 		static const juce::DropShadow s_panelShadow;
 		

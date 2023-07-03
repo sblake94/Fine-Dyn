@@ -1,13 +1,13 @@
-#include "BiquadProcessing.h"
+#include "FineDynProcessing.h"
 #include "Parameters.h"
 
-using namespace Processing;
+using namespace DSP;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /// <summary>
 /// Constructor
 /// </summary>
-BiquadProcessing::BiquadProcessing()
+FineDynProcessing::FineDynProcessing()
 {
 	floatingPointDitherL = 1.0; while (floatingPointDitherL < 16386) floatingPointDitherL = rand() * UINT32_MAX;
 	floatingPointDitherR = 1.0; while (floatingPointDitherR < 16386) floatingPointDitherR = rand() * UINT32_MAX;
@@ -17,7 +17,7 @@ BiquadProcessing::BiquadProcessing()
 /// <summary>
 /// Destructor
 /// </summary>
-BiquadProcessing::~BiquadProcessing()
+FineDynProcessing::~FineDynProcessing()
 {
 }
 
@@ -29,7 +29,7 @@ BiquadProcessing::~BiquadProcessing()
 /// <param name="_outputBuffer"></param>
 /// <param name="_params"></param>
 /// <param name="_sampleRate"></param>
-void BiquadProcessing::ProcessReplacing
+void FineDynProcessing::ProcessReplacing
 (
 	juce::AudioBuffer<float>& _inputBuffer,
 	juce::AudioBuffer<float>& _outputBuffer,
@@ -38,63 +38,12 @@ void BiquadProcessing::ProcessReplacing
 {
 	// Bypass Logic
 	if (Parameters::GetBoolParams().at(s_masterBypassParamID)->get() == true) 
-	{	
-		_outputBuffer = _inputBuffer;
-		return;
-	}
+		{ _outputBuffer = _inputBuffer; return; }
 
 	juce::AudioBuffer<float>& tempBuffer = _inputBuffer;
 
-	const bool heatEngaged = Parameters::GetBoolParams().at(s_engageHeatParamID)->get();
-	const bool lowShelfEngaged = Parameters::GetBoolParams().at(s_lowBandBypassParamID)->get();
-	const bool midPeakEngaged = Parameters::GetBoolParams().at(s_midBandBypassParamID)->get();
-	const bool highShelfEngaged = Parameters::GetBoolParams().at(s_highBandBypassParamID)->get();
-
-	// Apply Heat Curve
-	if (heatEngaged)
-	{
-		ApplyGainDB(tempBuffer, Parameters::GetSliderParams().at(s_heatGainParamID)->get());
-		ApplyCurve(tempBuffer);
-	}
-
-	// Apply High Shelf
-	if (highShelfEngaged)
-	{
-		m_biquadA.ApplyBiquad(
-			tempBuffer,
-			BiquadUnit::FilterType::HighShelf, 
-			_sampleRate);
-	}
-
-	// Apply Peak
-	if (midPeakEngaged)
-	{
-		m_biquadB.ApplyBiquad(
-			tempBuffer,
-			BiquadUnit::FilterType::PeakShelf,
-			_sampleRate);
-	}
-
-	// Apply Low Shelf
-	if (lowShelfEngaged)
-	{
-		m_biquadC.ApplyBiquad(
-			tempBuffer,
-			BiquadUnit::FilterType::LowShelf,
-			_sampleRate);
-	}
-
-	// Remove Heat Curve
-	if (heatEngaged)
-	{ 
-		RemoveCurve(tempBuffer);
-		ApplyGainDB(tempBuffer, -(Parameters::GetSliderParams().at(s_heatGainParamID)->get()));
-	}
-	
-	Clip(tempBuffer, -1.0, 1.0);
-
-	// Output Gain
-	ApplyGainDB(tempBuffer, Parameters::GetSliderParams().at(s_masterGainParamID)->get());
+	// Do the processing
+	// ...
 
 	_outputBuffer = tempBuffer;
 }
@@ -105,7 +54,7 @@ void BiquadProcessing::ProcessReplacing
 /// </summary>
 /// <param name="_buffer"></param>
 /// <param name="_sampleFrames"></param>
-void BiquadProcessing::ApplyCurve(juce::AudioSampleBuffer& _buffer)
+void FineDynProcessing::ApplyCurve(juce::AudioSampleBuffer& _buffer)
 {
 	for (int sampleIdx = 0; sampleIdx < _buffer.getNumSamples(); sampleIdx++)
 	{
@@ -127,7 +76,7 @@ void BiquadProcessing::ApplyCurve(juce::AudioSampleBuffer& _buffer)
 /// </summary>
 /// <param name="_buffer"></param>
 /// <param name="_sampleFrames"></param>
-void BiquadProcessing::RemoveCurve(juce::AudioSampleBuffer& _buffer)
+void FineDynProcessing::RemoveCurve(juce::AudioSampleBuffer& _buffer)
 {
 	Clip(_buffer, -1.0, 1.0);
 
@@ -152,7 +101,7 @@ void BiquadProcessing::RemoveCurve(juce::AudioSampleBuffer& _buffer)
 /// <param name="_buffer"></param>
 /// <param name="_min"></param>
 /// <param name="_max"></param>
-void BiquadProcessing::Clip
+void FineDynProcessing::Clip
 (
 	juce::AudioSampleBuffer& _buffer,
 	double _min,
@@ -181,7 +130,7 @@ void BiquadProcessing::Clip
 /// </summary>
 /// <param name="_buffer"></param>
 /// <param name="_gainDB"></param>
-void BiquadProcessing::ApplyGainDB
+void FineDynProcessing::ApplyGainDB
 (
 	juce::AudioSampleBuffer& _buffer,
 	const float const& _gainDB
@@ -218,7 +167,7 @@ void BiquadProcessing::ApplyGainDB
 /// </summary>
 /// <param name="sampleL"></param>
 /// <param name="sampleR"></param>
-void BiquadProcessing::DitherStereoSample
+void FineDynProcessing::DitherStereoSample
 (
 	double& sampleL, 
 	double& sampleR

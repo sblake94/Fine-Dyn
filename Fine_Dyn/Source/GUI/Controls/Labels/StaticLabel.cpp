@@ -1,6 +1,6 @@
 #include "StaticLabel.h"
 
-#include "../../../GUI/CustomLookAndFeel.h"
+#include "../../../GUI/LookAndFeels/CustomLookAndFeel.h"
 
 GUI::Controls::Labels::StaticLabel::StaticLabel
 (

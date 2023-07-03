@@ -1,6 +1,6 @@
 #include "TitleLabel.h"
 
-#include "../../CustomLookAndFeel.h"
+#include "../../LookAndFeels/CustomLookAndFeel.h"
 
 GUI::Controls::Labels::TitleLabel::TitleLabel
 (
@@ -19,7 +19,7 @@ GUI::Controls::Labels::TitleLabel::TitleLabel
 		_yPos,
 		_width,
 		_height,
-		GUI::CustomLookAndFeel::s_titleFont,
+		GUI::LookAndFeels::CustomLookAndFeel::s_titleFont,
 		_textColour,
 		2,
 		_parameterID,

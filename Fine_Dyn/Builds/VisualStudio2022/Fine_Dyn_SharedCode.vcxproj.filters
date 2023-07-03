@@ -613,17 +613,26 @@
     <Filter Include="Fine_Dyn\Source\GUI">
       <UniqueIdentifier>{5848efdd-11d8-4274-bcd1-9e3c7fbbabc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fine_Dyn\Source\GUI\Labels">
-      <UniqueIdentifier>{12e1307c-c9d3-4c10-bed6-e251a8cfb6fd}</UniqueIdentifier>
+    <Filter Include="Fine_Dyn\Source\GUI\Controls">
+      <UniqueIdentifier>{77da42f2-0d2c-4178-8f30-0ac89f3107fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fine_Dyn\Source\GUI\Dials">
-      <UniqueIdentifier>{41cfa1c0-a945-49df-bbae-7f8ca91af107}</UniqueIdentifier>
+    <Filter Include="Fine_Dyn\Source\GUI\Controls\BaseTypes">
+      <UniqueIdentifier>{02ab681b-dab4-4f8e-9381-17b802d4ec39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fine_Dyn\Source\GUI\Buttons">
+    <Filter Include="Fine_Dyn\Source\GUI\Controls\Buttons">
       <UniqueIdentifier>{44cc2741-7ff0-40c9-805b-dc467050b67f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fine_Dyn\Source\GUI\BaseTypes">
-      <UniqueIdentifier>{02ab681b-dab4-4f8e-9381-17b802d4ec39}</UniqueIdentifier>
+    <Filter Include="Fine_Dyn\Source\GUI\Controls\Dials">
+      <UniqueIdentifier>{41cfa1c0-a945-49df-bbae-7f8ca91af107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fine_Dyn\Source\GUI\Controls\Labels">
+      <UniqueIdentifier>{12e1307c-c9d3-4c10-bed6-e251a8cfb6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fine_Dyn\Source\GUI\LookAndFeels">
+      <UniqueIdentifier>{b1fc427d-1ee9-4614-8d29-454a364efdc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fine_Dyn\Source\GUI\Controls\Sliders">
+      <UniqueIdentifier>{aee5c116-acab-4cb7-a273-b277e5225d69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2955,41 +2964,56 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\DSP\BiquadProcessing.cpp">
-      <Filter>Fine_Dyn\Source\DSP</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DSP\BiquadUnit.cpp">
+    <ClCompile Include="..\..\Source\DSP\FineDynProcessing.cpp">
       <Filter>Fine_Dyn\Source\DSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DSP\Parameters.cpp">
       <Filter>Fine_Dyn\Source\DSP</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\CustomLabel.cpp">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\LatchButton.cpp">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\RotaryDial.cpp">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Buttons\EngageButton.cpp">
-      <Filter>Fine_Dyn\Source\GUI\Buttons</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\BandwidthDial.cpp">
-      <Filter>Fine_Dyn\Source\GUI\Dials</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\FrequencyDial.cpp">
-      <Filter>Fine_Dyn\Source\GUI\Dials</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\GainDial.cpp">
-      <Filter>Fine_Dyn\Source\GUI\Dials</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Labels\StaticLabel.cpp">
-      <Filter>Fine_Dyn\Source\GUI\Labels</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Labels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Labels\TitleLabel.cpp">
-      <Filter>Fine_Dyn\Source\GUI\Labels</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Labels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\LookAndFeels\CustomLookAndFeel.cpp">
+      <Filter>Fine_Dyn\Source\GUI\LookAndFeels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\Background.cpp">
+      <Filter>Fine_Dyn\Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\ControlManager.cpp">
+      <Filter>Fine_Dyn\Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.cpp">
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.cpp">
+      <Filter>Fine_Dyn\Source\GUI\Controls\Sliders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\Controls\Dials\RatioDial.cpp">
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5852,44 +5876,59 @@
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\DSP\BiquadProcessing.h">
-      <Filter>Fine_Dyn\Source\DSP</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DSP\BiquadUnit.h">
+    <ClInclude Include="..\..\Source\DSP\FineDynProcessing.h">
       <Filter>Fine_Dyn\Source\DSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DSP\Parameters.h">
       <Filter>Fine_Dyn\Source\DSP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomControlBase.h">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomLabel.h">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LatchButton.h">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\RotaryDial.h">
-      <Filter>Fine_Dyn\Source\GUI\BaseTypes</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Buttons\EngageButton.h">
-      <Filter>Fine_Dyn\Source\GUI\Buttons</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\BandwidthDial.h">
-      <Filter>Fine_Dyn\Source\GUI\Dials</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\FrequencyDial.h">
-      <Filter>Fine_Dyn\Source\GUI\Dials</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\GainDial.h">
-      <Filter>Fine_Dyn\Source\GUI\Dials</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Labels\StaticLabel.h">
-      <Filter>Fine_Dyn\Source\GUI\Labels</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Labels</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Labels\TitleLabel.h">
-      <Filter>Fine_Dyn\Source\GUI\Labels</Filter>
+      <Filter>Fine_Dyn\Source\GUI\Controls\Labels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\LookAndFeels\CustomLookAndFeel.h">
+      <Filter>Fine_Dyn\Source\GUI\LookAndFeels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\Background.h">
+      <Filter>Fine_Dyn\Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\ControlManager.h">
+      <Filter>Fine_Dyn\Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.h">
+      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.h">
+      <Filter>Fine_Dyn\Source\GUI\Controls\Sliders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\Controls\Dials\RatioDial.h">
+      <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

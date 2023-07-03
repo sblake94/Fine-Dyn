@@ -1,5 +1,5 @@
 #include "LatchButton.h"
-#include "../../../Processing/Parameters.h"
+#include "../../../DSP/Parameters.h"
 
 using namespace GUI::Controls::BaseTypes;
 
@@ -36,7 +36,7 @@ LatchButton::LatchButton
 	// Get the value of the parameter from the processor
 	try
 	{
-		const bool state = Processing::Parameters::GetBoolParams().at(_paramID)->get();
+		const bool state = DSP::Parameters::GetBoolParams().at(_paramID)->get();
 		this->setState(state ? juce::Button::buttonDown : juce::Button::buttonNormal);
 	}
 	catch (const std::exception& e)

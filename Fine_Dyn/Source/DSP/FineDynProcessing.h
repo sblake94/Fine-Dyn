@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Parameters.h"
-#include "BiquadUnit.h"
 
-namespace Processing
+namespace DSP
 {
 	///////////////////////////////////////////////////////////////////////////
 	/// <summary>
@@ -16,12 +15,12 @@ namespace Processing
 	/// https://github.com/airwindows/airwindows
 	/// 
 	/// </summary>
-	class BiquadProcessing
+	class FineDynProcessing
 	{
 	public: //////////////////////////////////////////////////////////////////
 
-		BiquadProcessing();
-		~BiquadProcessing();
+		FineDynProcessing();
+		~FineDynProcessing();
 
 		void ProcessReplacing
 		(
@@ -49,10 +48,6 @@ namespace Processing
 		void DitherStereoSample(double& sampleL, double& sampleR);
 
 	private://////////////////////////////////////////////////////////////////
-
-		BiquadUnit m_biquadA;
-		BiquadUnit m_biquadB;
-		BiquadUnit m_biquadC;
 
 		uint32_t floatingPointDitherL;
 		uint32_t floatingPointDitherR;

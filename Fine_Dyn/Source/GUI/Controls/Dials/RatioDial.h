@@ -1,12 +1,3 @@
-/*
-	==========================================================================================
-
-	@Author : SBlake
-	This class describes a Rotary Gain Dial with prebaked customizations for this project.
-
-	==========================================================================================
-*/
-
 #pragma once
 #include <JuceHeader.h>
 #include "../BaseTypes/RotaryDial.h"
@@ -15,34 +6,31 @@ namespace GUI::Controls::Dials
 {
 	/////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary>
-	/// A custom dial for Gain-specific parameters.
+	/// A dial for controlling the ratio of a filter.
 	/// </summary>
-	class GainDial
+	class RatioDial
 		: public BaseTypes::RotaryDial
 	{
 	public: /////////////////////////////////////////////////////////////////////////////////////////
-		GainDial(
+
+		RatioDial(
 			juce::String _labelText,
 			const int _xPos,
 			const int _yPos,
 			const int _width,
 			const int _height,
 			const int _parameterID,
-			const float _defaultValue,
-			const float _rangeMin,
-			const float _rangeMax,
-			const float _rangeInterval,
+			const float _defaultValue = 1.0f,
+			const float _rangeMin = 0.01f,
+			const float _rangeMax = 4.0f,
+			const float _rangeInterval = 0.01f,
 			juce::LookAndFeel* _lookAndFeel = nullptr);
-
-		~GainDial();
+		~RatioDial();
 
 		void paint(juce::Graphics& g) override;
 
 	private: /////////////////////////////////////////////////////////////////////////////////////////
-		const int m_textBoxHeight = 12;
-		const int m_textBoxWidth = 50;
-		const int m_labelFontSize = 18;
 
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GainDial)
+		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RatioDial)
 	};
 }

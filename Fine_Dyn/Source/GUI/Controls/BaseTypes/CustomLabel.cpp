@@ -1,7 +1,7 @@
 #include "CustomLabel.h"
 
 #include "CustomControlBase.h"
-#include "../../CustomLookAndFeel.h"
+#include "../../LookAndFeels/CustomLookAndFeel.h"
 
 GUI::Controls::BaseTypes::CustomLabel::CustomLabel
 (
@@ -41,9 +41,9 @@ void GUI::Controls::BaseTypes::CustomLabel::paint(juce::Graphics& g)
 {
 	juce::Label::paint(g);
 
-	const juce::Rectangle<int> bounds = getLocalBounds().reduced(GUI::CustomLookAndFeel::s_controlBoundsMargin);
+	const juce::Rectangle<int> bounds = getLocalBounds().reduced(GUI::LookAndFeels::CustomLookAndFeel::s_controlBoundsMargin);
 
 	g.setColour(m_textColour);
 	g.setFont(m_font);
-	g.drawFittedText(m_labelText, bounds.reduced(GUI::CustomLookAndFeel::s_controlBoundsMargin), juce::Justification::centred, m_maxLines);
+	g.drawFittedText(m_labelText, bounds.reduced(GUI::LookAndFeels::CustomLookAndFeel::s_controlBoundsMargin), juce::Justification::centred, m_maxLines);
 }

@@ -1,6 +1,6 @@
 #include "RotaryDial.h"
-#include "../../CustomLookAndFeel.h"
-#include "../../../Processing/Parameters.h"
+#include "../../LookAndFeels/CustomLookAndFeel.h"
+#include "../../../DSP/Parameters.h"
 
 using namespace GUI::Controls::BaseTypes;
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -41,11 +41,12 @@ RotaryDial::RotaryDial
 		_paramID)
 {
 
-	float value = Processing::Parameters::GetSliderParams().at(_paramID)->get();
+	float value = DSP::Parameters::GetSliderParams().at(_paramID)->get();
 	this->setValue(value);
 
 
 	// Slider Properties
+	this->setName(_labelText);
 	this->setComponentID(_labelText);
 	this->setRange(_rangeMin, _rangeMax, _rangeInterval);
 
@@ -79,23 +80,5 @@ RotaryDial::~RotaryDial()
 /// <param name="g">The Graphics unit to be used to draw the dial</param>
 void RotaryDial::paint(juce::Graphics& g)
 {
-	auto bounds = getLocalBounds();
-
-	// draw a Label at the top of the dial
-	g.setColour(GUI::CustomLookAndFeel::s_textColourBrightT);
-	g.setFont(GUI::CustomLookAndFeel::s_labelFont);
-	
-	g.drawText(m_labelText, 0, 0, bounds.getWidth(), m_textBoxHeight, juce::Justification::centred, true);
-
-	// Value text
-	g.setColour(GUI::CustomLookAndFeel::s_textColourBrightT);
-	static char buffer[16];
-	std::snprintf(buffer, sizeof(buffer), "%.2f", getValue());
-	const juce::String text = juce::String(buffer) + juce::String(getTextValueSuffix());
-
-	g.drawText(text, bounds.reduced(GUI::CustomLookAndFeel::s_controlBoundsMargin), 
-		juce::Justification::centredBottom,
-		true);
-
 	juce::Slider::paint(g);
 }

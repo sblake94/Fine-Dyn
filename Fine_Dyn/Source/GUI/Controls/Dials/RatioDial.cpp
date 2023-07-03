@@ -1,17 +1,17 @@
-#include "BandwidthDial.h"
+#include "RatioDial.h"
 #include "../../LookAndFeels/CustomLookAndFeel.h"
 using namespace GUI::Controls::Dials;
 
 /////////////////////////////////////////////////////////////////////////////////////
 /// <summary>
-/// Constructor for the bandwidth dial.
+/// Constructor for the ratio dial.
 /// </summary>
 /// <param name="_labelText">The text that will appear in the slider's Label</param>
 /// <param name="_xPos">The X Position of the Dial on the Grid</param>
 /// <param name="_yPos">The Y Position of the Dial on the Grid</param>
 /// <param name="_parameterID">The ID linking the Dial to it's associated Parameter (See Parameters.h)</param>
 /// <param name="_lookAndFeel">The LookAndFeel of the Dial</param>
-BandwidthDial::BandwidthDial
+RatioDial::RatioDial
 (
 	juce::String _labelText,
 	const int _xPos,
@@ -31,7 +31,7 @@ BandwidthDial::BandwidthDial
 		_rangeInterval,
 		_defaultValue,
 		_labelText,
-		" 8ve",
+		" : 1",
 		_xPos,
 		_yPos,
 		_width,
@@ -39,18 +39,15 @@ BandwidthDial::BandwidthDial
 		_parameterID,
 		_lookAndFeel)
 {
-	// Only specific settings for BandwidthDial controls go here
-	this->setNumDecimalPlacesToDisplay(1);
-	this->setSkewFactorFromMidPoint(1.0f);
-
-
+	this->setNumDecimalPlacesToDisplay(2);
+	this->setSkewFactorFromMidPoint(2.0f);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 /// <summary>
 /// Destructor for the bandwidth dial.
 /// </summary>
-BandwidthDial::~BandwidthDial()
+RatioDial::~RatioDial()
 {
 }
 
@@ -59,7 +56,7 @@ BandwidthDial::~BandwidthDial()
 /// Handles the drawing of the dial
 /// </summary>
 /// <param name="g">The Graphics unit to be used to draw the dial</param>
-void BandwidthDial::paint(juce::Graphics& g)
+void RatioDial::paint(juce::Graphics& g)
 {
 	BaseTypes::RotaryDial::paint(g);
 

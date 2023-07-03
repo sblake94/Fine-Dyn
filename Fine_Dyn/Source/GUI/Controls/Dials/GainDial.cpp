@@ -59,7 +59,4 @@ GainDial::~GainDial()
 void GainDial::paint(juce::Graphics& g)
 {
 	BaseTypes::RotaryDial::paint(g);
-
-	const int sliderTop = m_textBoxHeight;
-	const juce::Rectangle<int> sliderBounds(getLocalBounds().removeFromTop(getHeight() - 2 * m_textBoxHeight));
 }
