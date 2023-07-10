@@ -22,16 +22,10 @@ namespace GUI::Controls::Dials
 	{
 	public: /////////////////////////////////////////////////////////////////////////////////////////
 		GainDial(
-			juce::String _labelText,
-			const int _xPos,
-			const int _yPos,
-			const int _width,
-			const int _height,
-			const int _parameterID,
-			const float _defaultValue,
 			const float _rangeMin,
 			const float _rangeMax,
 			const float _rangeInterval,
+			const float _defaultValue,
 			juce::LookAndFeel* _lookAndFeel = nullptr);
 
 		~GainDial();

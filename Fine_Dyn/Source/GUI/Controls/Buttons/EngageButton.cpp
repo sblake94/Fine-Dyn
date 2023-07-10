@@ -15,22 +15,12 @@ using namespace GUI::Controls::Buttons;
 EngageButton::EngageButton
 (
 	juce::String _labelText,
-	const int _xPos,
-	const int _yPos,
-	const int _width,
-	const int _height,
-	const int _parameterID,
 	bool _isEngaged,
 	juce::LookAndFeel* _lookAndFeel
 )
 	: BaseTypes::LatchButton(
 		_labelText,
-		_xPos,
-		_yPos,
-		_width,
-		_height,
 		_isEngaged,
-		_parameterID,
 		_lookAndFeel)
 {
 }

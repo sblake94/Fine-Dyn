@@ -21,14 +21,35 @@ namespace GUI
 		: m_controlAreaHeight(_windowHeight - 2 * m_margin)
 		, m_controlAreaWidth(_windowWidth - 2 * m_margin)
 		
-		, m_thresholdSlider(-96, 6, 0.01f, 0.0f, "Threshold", 0, 0, 2, 5, DSP::s_thresholdParamID, true, _lookAndFeelPtr)
-		, m_ratioDial("Ratio", 2, 0, 2, 2, DSP::s_ratioParamID, 1.5f, 1.0f, 8.0f, 0.01f, _lookAndFeelPtr)
+		, m_thresholdSlider(std::make_unique<GridResident>(
+			new ThresholdSlider(-36.f, 12.f, 0.1f, 0.0f, true, _lookAndFeelPtr), 
+			DSP::s_thresholdParamID, 
+			0, 0, 3, 6))
 
-		, m_masterBypassButton("Bypass", 8, 4, 2, 1, DSP::s_masterBypassParamID, false, _lookAndFeelPtr)
-		, m_masterGainSlider("Output Gain", 8, 5, 2, 2, DSP::s_masterGainParamID, 0.0f, -12.0f, 12.0f, 0.0f, _lookAndFeelPtr)
+		, m_ratioDial(std::make_unique<GridResident>(
+			new RatioDial(1.0f, 8.0f, 0.0f, 1.5f, _lookAndFeelPtr),
+			DSP::s_ratioParamID,
+			3, 0, 3, 3))
 
-		, m_fineTitleLabel("FINE", 6, 0, 4, 2, DSP::s_NULL_PARAM_ID, LookAndFeels::CustomLookAndFeel::s_colour_brightAccent, _lookAndFeelPtr)
-		, m_dynTitleLabel("DYNA", 6, 1, 4, 2, DSP::s_NULL_PARAM_ID, LookAndFeels::CustomLookAndFeel::s_textColourBrightT, _lookAndFeelPtr)
+		, m_masterBypassButton(std::make_unique<GridResident>(
+			new EngageButton("Bypass", false, _lookAndFeelPtr),
+			DSP::s_masterBypassParamID, 
+			8, 5, 3, 1))
+
+		, m_masterGainSlider(std::make_unique<GridResident>(
+			new GainDial(-12.0f, 12.0f, 0.0f, 0.0f, _lookAndFeelPtr),
+			DSP::s_masterGainParamID, 
+			8, 6, 3, 3))
+
+		, m_fineTitleLabel(std::make_unique<GridResident>(
+			new TitleLabel("FINE", LookAndFeels::CustomLookAndFeel::s_colour_brightAccent, _lookAndFeelPtr),
+			DSP::s_NULL_PARAM_ID, 
+			8, 1, 3, 1))
+
+		, m_dynTitleLabel(std::make_unique<GridResident>(
+			new TitleLabel("DYNA", LookAndFeels::CustomLookAndFeel::s_textColourBrightT, _lookAndFeelPtr),
+			DSP::s_NULL_PARAM_ID,
+			8, 2, 3, 1))
 	{
 	}
 
@@ -77,9 +98,9 @@ namespace GUI
 				}
 			}
 
-			for (auto control : GetAllCustomControls())
+			for (auto& control : GetAllGridResidents())
 			{
-				auto bounds = control->getBounds();
+				auto bounds = control->m_component->getBounds();
 
 				_graphics.fillRect(bounds);
 			}
@@ -88,13 +109,13 @@ namespace GUI
 
 	void ControlManager::DrawControlGroupPanels(juce::Graphics& _graphics)
 	{
-		for (std::vector<juce::Component*> ctrlGroup : GetControlGroups())
+		for (vector<GridResident*> ctrlGroup : GetControlGroups())
 		{
 			// Get the collective bounds of each control in the group
 			juce::Rectangle<int> ctrlGroupBounds = juce::Rectangle<int>(0, 0, 0, 0);
-			for (juce::Component* component : ctrlGroup)
+			for (auto& component : ctrlGroup)
 			{
-				const juce::Rectangle<int> componentBounds = component->getBounds();
+				const juce::Rectangle<int> componentBounds = component->m_component->getBounds();
 				ctrlGroupBounds = ctrlGroupBounds.getUnion(componentBounds);
 			}
 
@@ -141,153 +162,39 @@ namespace GUI
 		m_boundsGrid = GenerateGridOfBounds();
 
 		// Iterate over your controls and set their positions
-		for (GUI::Controls::BaseTypes::RotaryDial* rotaryDial : GetAllRotaryDials())
+		for (GUI::GridResident* gridResident : GetAllGridResidents())
 		{
 			juce::Point<int>& topLeft = m_boundsGrid
-				[rotaryDial->m_xPos]
-				[rotaryDial->m_yPos]
+				[gridResident->m_xPos]
+				[gridResident->m_yPos]
 				.getTopLeft();
 
 			juce::Point<int>& bottomRight = m_boundsGrid
-				[rotaryDial->m_xPos + rotaryDial->m_width - 1]
-				[rotaryDial->m_yPos + rotaryDial->m_height - 1]
+				[gridResident->m_xPos + gridResident->m_width - 1]
+				[gridResident->m_yPos + gridResident->m_height - 1]
 				.getBottomRight();
 
-			rotaryDial->setBounds(juce::Rectangle<int>(topLeft, bottomRight));
-		}
-
-		for (GUI::Controls::BaseTypes::LatchButton* latchButton : GetAllLatchButtons())
-		{
-			juce::Point<int>& topLeft = m_boundsGrid
-				[latchButton->m_xPos]
-				[latchButton->m_yPos]
-				.getTopLeft();
-
-			juce::Point<int>& bottomRight = m_boundsGrid
-				[latchButton->m_xPos + latchButton->m_width - 1]
-				[latchButton->m_yPos + latchButton->m_height - 1]
-				.getBottomRight();
-
-			juce::Rectangle<int> bounds = juce::Rectangle<int>(topLeft, bottomRight);
-
-			latchButton->setBounds(bounds);
-		}
-
-		for (GUI::Controls::BaseTypes::LinearSlider* LinearSliders : GetAllLinearSliders())
-		{
-			juce::Point<int>& topLeft = m_boundsGrid
-				[LinearSliders->m_xPos]
-				[LinearSliders->m_yPos]
-				.getTopLeft();
-
-			juce::Point<int>& bottomRight = m_boundsGrid
-				[LinearSliders->m_xPos + LinearSliders->m_width - 1]
-				[LinearSliders->m_yPos + LinearSliders->m_height - 1]
-				.getBottomRight();
-
-			juce::Rectangle<int> bounds = juce::Rectangle<int>(topLeft, bottomRight);
-
-			LinearSliders->setBounds(bounds);
-		}
-
-		for (GUI::Controls::BaseTypes::CustomLabel* customLabel : GetAllCustomLabels())
-		{
-			juce::Point<int>& topLeft = m_boundsGrid
-				[customLabel->m_xPos]
-				[customLabel->m_yPos]
-				.getTopLeft();
-
-			juce::Point<int>& bottomRight = m_boundsGrid
-				[customLabel->m_xPos + customLabel->m_width - 1]
-				[customLabel->m_yPos + customLabel->m_height - 1]
-				.getBottomRight();
-
-			customLabel->setBounds(juce::Rectangle<int>(topLeft, bottomRight));
+				gridResident->m_component->setBounds(juce::Rectangle<int>(topLeft, bottomRight));
 		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/// <summary>
-	/// Returns a vector of pointers to all dials.
+	/// Gets pointers to all the controls in the ControlManager.
 	/// </summary>
-	/// <returns>Vector of Component*</returns>
-	const std::vector<BaseTypes::RotaryDial*> ControlManager::GetAllRotaryDials()
+	/// <returns>BoundsGrid</returns>
+	const vector<GridResident*> ControlManager::GetAllGridResidents()
 	{
-		std::vector<BaseTypes::RotaryDial*> result;
+		vector<GridResident*> result;
 
-		result.push_back(&m_masterGainSlider);
-		result.push_back(&m_ratioDial);
+		result.push_back(m_thresholdSlider.get());
+		result.push_back(m_ratioDial.get());
 
-		return result;
-	}
+		result.push_back(m_masterBypassButton.get());
+		result.push_back(m_masterGainSlider.get());
 
-	/////////////////////////////////////////////////////////////////////////////////////
-	/// <summary>
-	/// Returns a vector of pointers to all controls.
-	/// </summary>
-	/// <returns>Vector of Component*</returns>
-	const std::vector<BaseTypes::LinearSlider*> ControlManager::GetAllLinearSliders()
-	{
-		std::vector<BaseTypes::LinearSlider*> result;
-
-		result.push_back(&m_thresholdSlider);
-
-
-		return result;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-	/// <summary>
-	/// Returns a vector of pointers to all buttons.
-	/// </summary>
-	/// <returns>Vector of Component*</returns>
-	const std::vector<BaseTypes::LatchButton*> ControlManager::GetAllLatchButtons()
-	{
-		std::vector<BaseTypes::LatchButton*> result;
-
-		result.push_back(&m_masterBypassButton);
-
-		return result;
-	}
-
-	const std::vector<BaseTypes::CustomLabel*> ControlManager::GetAllCustomLabels()
-	{
-		std::vector<BaseTypes::CustomLabel*> result;
-
-		result.push_back(&m_fineTitleLabel);
-		result.push_back(&m_dynTitleLabel);
-
-		return result;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-	/// <summary>
-	/// Returns a vector of pointers to all controls.
-	/// </summary>
-	/// <returns>Vector of Component*</returns>
-	const std::vector<juce::Component*> ControlManager::GetAllCustomControls()
-	{
-		std::vector<juce::Component*> result;
-
-		for (BaseTypes::RotaryDial* rotaryDialPtr : GetAllRotaryDials())
-		{
-			result.push_back(dynamic_cast<juce::Component*>(rotaryDialPtr));
-		}
-
-		for (BaseTypes::LatchButton* latchButtonPtr : GetAllLatchButtons())
-		{
-			result.push_back(dynamic_cast<juce::Component*>(latchButtonPtr));
-		}
-
-		for (BaseTypes::CustomLabel* customLabelPtr : GetAllCustomLabels())
-		{
-			result.push_back(dynamic_cast<juce::Component*>(customLabelPtr));
-		}
-
-		for (BaseTypes::LinearSlider* linearSliderPtr : GetAllLinearSliders())
-		{
-			result.push_back(dynamic_cast<juce::Component*>(linearSliderPtr));
-		}
+		result.push_back(m_fineTitleLabel.get());
+		result.push_back(m_dynTitleLabel.get());
 
 		return result;
 	}
@@ -297,25 +204,25 @@ namespace GUI
 	/// Returns a vector of vectors, each containing grouped controls.
 	/// </summary>
 	/// <returns>Vector of vectors of Component*</returns>
-	const std::vector<std::vector<juce::Component*>> ControlManager::GetControlGroups()
+	const vector<vector<GridResident*>> ControlManager::GetControlGroups()
 	{
-		std::vector<std::vector<juce::Component*>> result;
+		vector<vector<GridResident*>> result;
 
 		// Compressor
-		result.push_back(std::vector<juce::Component*>
+		result.push_back(vector<GridResident*>
 		{
-			dynamic_cast<juce::Component*>(&m_thresholdSlider),
-			dynamic_cast<juce::Component*>(&m_ratioDial)
+			m_thresholdSlider.get(),
+			m_ratioDial.get()
 		});
 
 		// Master
-		result.push_back(std::vector<juce::Component*>
+		result.push_back(vector<GridResident*>
 		{
-			dynamic_cast<juce::Component*>(&m_masterBypassButton),
-			dynamic_cast<juce::Component*>(&m_masterGainSlider),
+			m_masterBypassButton.get(),
+			m_masterGainSlider.get(),
 
-			dynamic_cast<juce::Component*>(&m_fineTitleLabel),
-			dynamic_cast<juce::Component*>(&m_dynTitleLabel)
+			m_fineTitleLabel.get(),
+			m_dynTitleLabel.get(),
 		});
 
 		return result;
@@ -340,7 +247,7 @@ namespace GUI
 		for (int x = 0; x < m_controlGridSizeX; x++)
 		{
 			// add the new column
-			m_boundsGrid.push_back(std::vector<juce::Rectangle<int>>());
+			m_boundsGrid.push_back(vector<juce::Rectangle<int>>());
 
 			for (int y = 0; y < m_controlGridSizeY; y++)
 			{

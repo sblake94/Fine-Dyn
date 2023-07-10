@@ -3009,11 +3009,14 @@
     <ClCompile Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.cpp">
       <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.cpp">
+    <ClCompile Include="..\..\Source\GUI\Controls\Sliders\ThresholdSlider.cpp">
       <Filter>Fine_Dyn\Source\GUI\Controls\Sliders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\RatioDial.cpp">
       <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\GridResident.cpp">
+      <Filter>Fine_Dyn\Source\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5882,9 +5885,6 @@
     <ClInclude Include="..\..\Source\DSP\Parameters.h">
       <Filter>Fine_Dyn\Source\DSP</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomControlBase.h">
-      <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomLabel.h">
       <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClInclude>
@@ -5924,11 +5924,14 @@
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.h">
       <Filter>Fine_Dyn\Source\GUI\Controls\BaseTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.h">
+    <ClInclude Include="..\..\Source\GUI\Controls\Sliders\ThresholdSlider.h">
       <Filter>Fine_Dyn\Source\GUI\Controls\Sliders</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\RatioDial.h">
       <Filter>Fine_Dyn\Source\GUI\Controls\Dials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\GridResident.h">
+      <Filter>Fine_Dyn\Source\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

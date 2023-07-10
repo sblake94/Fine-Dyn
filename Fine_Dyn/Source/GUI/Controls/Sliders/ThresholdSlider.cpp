@@ -1,4 +1,4 @@
-#include "LevelSlider.h"
+#include "ThresholdSlider.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// <summary>
@@ -16,33 +16,22 @@
 /// <param name="_paramID"></param>
 /// <param name="_isVertical"></param>
 /// <param name="_lookAndFeel"></param>
-GUI::Controls::Sliders::LevelSlider::LevelSlider
+GUI::Controls::Sliders::ThresholdSlider::ThresholdSlider
 (
 	const float _rangeMin, 
 	const float _rangeMax, 
 	const float _rangeInterval, 
 	const float _defaultValue, 
-	juce::String _labelText, 
-	const int _xPos, 
-	const int _yPos, 
-	const int _width, 
-	const int _height, 
-	const int _paramID, 
 	const bool _isVertical,
 	juce::LookAndFeel* _lookAndFeel
 )
 	: GUI::Controls::BaseTypes::LinearSlider(
+		juce::String("Threshold"),
+		juce::String(" dB"),
 		_rangeMin,
 		_rangeMax,
 		_rangeInterval,
 		_defaultValue,
-		_labelText,
-		" dB",
-		_xPos,
-		_yPos,
-		_width,
-		_height,
-		_paramID,
 		_lookAndFeel)
 {
 }
@@ -51,7 +40,7 @@ GUI::Controls::Sliders::LevelSlider::LevelSlider
 /// <summary>
 /// Destructor
 /// </summary>
-GUI::Controls::Sliders::LevelSlider::~LevelSlider()
+GUI::Controls::Sliders::ThresholdSlider::~ThresholdSlider()
 {
 }
 
@@ -60,7 +49,7 @@ GUI::Controls::Sliders::LevelSlider::~LevelSlider()
 /// Paints the GainDBSlider
 /// </summary>
 /// <param name="_graphics"></param>
-void GUI::Controls::Sliders::LevelSlider::paint(juce::Graphics& _graphics)
+void GUI::Controls::Sliders::ThresholdSlider::paint(juce::Graphics& _graphics)
 {
 	LinearSlider::paint(_graphics);
 }

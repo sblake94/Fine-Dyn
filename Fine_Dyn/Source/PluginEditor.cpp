@@ -10,8 +10,8 @@
 #include "PluginEditor.h"
 
 #include "DSP/Parameters.h"
+#include "GUI/GridResident.h"
 #include "GUI/LookAndFeels/CustomLookAndFeel.h"
-#include "GUI/Controls/BaseTypes/CustomControlBase.h"
 
 #include <stdlib.h>
 #include <map>
@@ -31,31 +31,39 @@ Fine_DynAudioProcessorEditor::Fine_DynAudioProcessorEditor (Fine_DynAudioProcess
     setResizable(false, false);
 
     // Make all controls visible
-    // NOTE: Many for loops makes me sad, can we do this inside of a single for loop?
-    for (BaseTypes::RotaryDial* dialPtr : m_controlManager.GetAllRotaryDials())
+    auto residents = m_controlManager.GetAllGridResidents();
+    for (GUI::GridResident* gridResident : residents)
     {
-        dialPtr->setValue(DSP::Parameters::GetSliderParams().at(dialPtr->m_id)->get(), juce::dontSendNotification);
-        dialPtr->addListener(this);
-        addAndMakeVisible(dynamic_cast<juce::Slider*>(dialPtr));
-    }
+        // set the component's value to the parameter's value
+        int paramID = gridResident->m_parameterID;
 
-    for (BaseTypes::LatchButton* buttonPtr : m_controlManager.GetAllLatchButtons())
-    {
-        buttonPtr->setToggleState(DSP::Parameters::GetBoolParams().at(buttonPtr->m_id)->get(), juce::dontSendNotification);
-        buttonPtr->addListener(this);
-        addAndMakeVisible(dynamic_cast<juce::ToggleButton*>(buttonPtr));
-    }
+        // add this as a listener to the component
+        if (juce::Button* buttonPtr = gridResident->GetAsButtonPtr())
+        {
+            const BoolParamDirectory& params = DSP::Parameters::GetBoolParams();
+            AudioParameterBool* param = DSP::Parameters::GetBoolParams().at(paramID);
+            
+            buttonPtr->addListener(this);
+			buttonPtr->setToggleState(*param, juce::dontSendNotification);
+            addAndMakeVisible(*buttonPtr);
+        }
+        else if (juce::Slider* sliderPtr = gridResident->GetAsSliderPtr())
+        {
+            const FloatParamDirectory& params = DSP::Parameters::GetSliderParams();
+            AudioParameterFloat* param = DSP::Parameters::GetSliderParams().at(paramID);
 
-    for (BaseTypes::CustomLabel* labelPtr : m_controlManager.GetAllCustomLabels())
-    {
-        addAndMakeVisible(dynamic_cast<juce::Label*>(labelPtr));
-    }
-
-    for (BaseTypes::LinearSlider* sliderPtr : m_controlManager.GetAllLinearSliders())
-    {
-        sliderPtr->setValue(DSP::Parameters::GetSliderParams().at(sliderPtr->m_id)->get(), juce::dontSendNotification);
-        sliderPtr->addListener(this);
-        addAndMakeVisible(dynamic_cast<juce::Slider*>(sliderPtr));
+			sliderPtr->addListener(this);
+			sliderPtr->setValue(*param, juce::dontSendNotification);
+            addAndMakeVisible(*sliderPtr);
+		}
+        else if (juce::Label* labelPtr = gridResident->GetAsLabelPtr())
+        {
+            addAndMakeVisible(*labelPtr);
+        }
+        else
+        {
+			throw new exception("GridResident is not a handled type");
+		}
     }
 }
 
@@ -84,42 +92,56 @@ void Fine_DynAudioProcessorEditor::resized()
 void Fine_DynAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
 {
     // Get the slider's ID
-    juce::ParameterID sliderID = dynamic_cast<GUI::Controls::BaseTypes::CustomControlBase*>(slider)->m_id;
-
-    // Get the slider's value
-    float sliderValue = slider->getValue();
-
-    // Update the processor
-    for (std::pair<juce::ParameterID, juce::AudioParameterFloat*> param : DSP::Parameters::GetSliderParams())
+    auto gridResidents = m_controlManager.GetAllGridResidents();
+    for (auto resident : gridResidents)
     {
-        if (param.first.getParamID() == sliderID.getParamID())
-        {
-            juce::AudioParameterFloat* paramFloat = param.second;
-            *paramFloat = (float)sliderValue;
-            return;
-        }
-    }
+        juce::ParameterID buttonID = resident->m_parameterID;
 
-    throw new std::exception("Slider ID not found in processor");
+        // Get the slider's value
+        float sliderValue = slider->getValue();
+
+        // Update the processor
+        for (pair<juce::ParameterID, juce::AudioParameterFloat*> param : DSP::Parameters::GetSliderParams())
+        {
+            if (param.first.getParamID() == buttonID.getParamID())
+            {
+                juce::AudioParameterFloat* paramFloat = param.second;
+                *paramFloat = (float)sliderValue;
+                return;
+            }
+        }
+	}
+
+    
+
+    throw new exception("Slider ID not found in processor");
 }
 
 void Fine_DynAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
     // Get the button's ID
-    juce::ParameterID buttonID = dynamic_cast<GUI::Controls::BaseTypes::CustomControlBase*>(button)->m_id;
-
-    // Get the button's value
-    bool buttonValue = button->getToggleState();
-
-    // Update the processor
-    for (std::pair<juce::ParameterID, juce::AudioParameterBool*> param : DSP::Parameters::GetBoolParams())
+    auto residents = m_controlManager.GetAllGridResidents();
+    for (GUI::GridResident* res : residents)
     {
-        if (param.first.getParamID() == buttonID.getParamID())
+        juce::Button* resButton = res->GetAsButtonPtr();
+        if (button == res->GetAsButtonPtr())
         {
-            param.second->setValueNotifyingHost(buttonValue);
-            return;
-        }
-    }
+			juce::ParameterID buttonID = res->m_parameterID;
+    
+            // Get the button's value
+            bool buttonValue = button->getToggleState();
 
-    throw new std::exception("Button ID not found in processor");
+            // Update the processor
+            for (pair<juce::ParameterID, juce::AudioParameterBool*> param : DSP::Parameters::GetBoolParams())
+            {
+                if (param.first.getParamID() == buttonID.getParamID())
+                {
+					param.second->setValueNotifyingHost(buttonValue);
+					return;
+				}
+			}
+		}
+	}
+
+    throw new exception("Button ID not found in processor");
 }

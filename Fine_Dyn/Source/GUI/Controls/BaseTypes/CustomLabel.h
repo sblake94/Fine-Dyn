@@ -1,26 +1,19 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../BaseTypes/CustomControlBase.h"
 
 namespace GUI::Controls::BaseTypes
 {
 	class CustomLabel
 		: public juce::Label
-		, public CustomControlBase
 	{
 	public: /////////////////////////////////////////////////////////////////////////////////////////
 
 		CustomLabel(
-			juce::String _labelText,
-			const int _xPos,
-			const int _yPos,
-			const int _width,
-			const int _height,
+			const juce::String _labelText,
 			const juce::Font _font,
 			const juce::Colour _textColour,
 			const int _maxLines,
-			const int _parameterID,
 			juce::LookAndFeel* _lookAndFeel = nullptr);
 		~CustomLabel();
 

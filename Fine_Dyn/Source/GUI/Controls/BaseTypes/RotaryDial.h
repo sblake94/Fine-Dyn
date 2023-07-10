@@ -2,8 +2,6 @@
 
 #include <JuceHeader.h>
 
-#include "CustomControlBase.h"
-
 namespace GUI::Controls::BaseTypes
 {
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -12,21 +10,15 @@ namespace GUI::Controls::BaseTypes
 	/// </summary>
 	class RotaryDial
 		: public juce::Slider
-		, public CustomControlBase
 	{
 	public: /////////////////////////////////////////////////////////////////////////////////////////
 		RotaryDial(
+			juce::String _labelText,
+			juce::String _unitSuffix,
 			const float _rangeMin,
 			const float _rangeMax,
 			const float _rangeInterval,
 			const float _defaultValue,
-			juce::String _labelText,
-			juce::String _unitSuffix,
-			const int _xPos,
-			const int _yPos,
-			const int _width,
-			const int _height,
-			const int _paramID,
 			juce::LookAndFeel* _lookAndFeel);
 		~RotaryDial();
 

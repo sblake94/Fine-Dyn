@@ -13,30 +13,19 @@ using namespace GUI::Controls::Dials;
 /// <param name="_lookAndFeel">The LookAndFeel of the Dial</param>
 RatioDial::RatioDial
 (
-	juce::String _labelText,
-	const int _xPos,
-	const int _yPos,
-	const int _width,
-	const int _height,
-	const int _parameterID,
-	const float _defaultValue,
 	const float _rangeMin,
 	const float _rangeMax,
 	const float _rangeInterval,
+	const float _defaultValue,
 	juce::LookAndFeel* _lookAndFeel
 )
 	: BaseTypes::RotaryDial(
+		juce::String("Ratio"),
+		juce::String(" : 1"),
 		_rangeMin,
 		_rangeMax,
 		_rangeInterval,
 		_defaultValue,
-		_labelText,
-		" : 1",
-		_xPos,
-		_yPos,
-		_width,
-		_height,
-		_parameterID,
 		_lookAndFeel)
 {
 	this->setNumDecimalPlacesToDisplay(2);

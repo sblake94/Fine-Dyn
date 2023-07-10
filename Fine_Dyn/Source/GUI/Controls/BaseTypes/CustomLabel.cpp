@@ -1,30 +1,16 @@
 #include "CustomLabel.h"
 
-#include "CustomControlBase.h"
 #include "../../LookAndFeels/CustomLookAndFeel.h"
 
 GUI::Controls::BaseTypes::CustomLabel::CustomLabel
 (
-	juce::String _labelText,
-	const int _xPos, 
-	const int _yPos, 
-	const int _width, 
-	const int _height, 
+	const juce::String _labelText,
 	const juce::Font _font,
 	const juce::Colour _textColour,
 	const int _maxLines,
-	const int _parameterID, 
 	juce::LookAndFeel* _lookAndFeel
 )
 	: juce::Label(_labelText)
-	, BaseTypes::CustomControlBase(
-		_labelText,
-		_xPos,
-		_yPos,
-		_width,
-		_height,
-		_parameterID
-	)
 	, m_labelText(_labelText)
 	, m_textColour(_textColour)
 	, m_font(_font)

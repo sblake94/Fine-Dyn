@@ -10,7 +10,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../BaseTypes/CustomControlBase.h"
 #include "../BaseTypes/RotaryDial.h"
 
 namespace GUI::Controls::Dials
@@ -24,12 +23,6 @@ namespace GUI::Controls::Dials
 	{
 	public: /////////////////////////////////////////////////////////////////////////////////////////
 		FrequencyDial(
-			juce::String _labelText,
-			const int _xPos,
-			const int _yPos,
-			const int _width,
-			const int _height,
-			const int _parameterID,
 			const float _defaultValue = 2000.0f,
 			const float _rangeMin = 20.0f,
 			const float _rangeMax = 20000.0f,

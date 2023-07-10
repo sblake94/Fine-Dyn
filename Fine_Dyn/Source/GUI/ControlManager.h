@@ -11,7 +11,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "Controls/BaseTypes/CustomControlBase.h"
 #include "Controls/BaseTypes/LatchButton.h"
 #include "Controls/BaseTypes/RotaryDial.h"
 #include "Controls/Buttons/EngageButton.h"
@@ -20,7 +19,8 @@
 #include "Controls/Dials/GainDial.h"
 #include "Controls/Dials/RatioDial.h"
 #include "Controls/Labels/TitleLabel.h"
-#include "Controls/Sliders/LevelSlider.h"
+#include "Controls/Sliders/ThresholdSlider.h"
+#include "GridResident.h"
 
 using namespace GUI::Controls;
 using namespace GUI::Controls::BaseTypes;
@@ -29,7 +29,10 @@ using namespace GUI::Controls::Buttons;
 using namespace GUI::Controls::Labels;
 using namespace GUI::Controls::Sliders;
 
-using BoundsGrid = std::vector<std::vector<juce::Rectangle<int>>>;
+using namespace std;
+using namespace juce;
+
+using BoundsGrid = vector<vector<juce::Rectangle<int>>>;
 
 namespace GUI
 {
@@ -44,44 +47,39 @@ namespace GUI
 		ControlManager(
 			const int _windowWidth, 
 			const int _windowHeight,
-			juce::LookAndFeel* _lookAndFeelPtr = nullptr);
+			LookAndFeel* _lookAndFeelPtr = nullptr);
 		~ControlManager();
 
-		void paint(juce::Graphics& _graphics);
-		void DEBUG_DrawGrid(juce::Graphics& _graphics);
-		void DrawControlGroupPanels(juce::Graphics& _graphics);
+		void paint(Graphics& _graphics);
+		void DEBUG_DrawGrid(Graphics& _graphics);
+		void DrawControlGroupPanels(Graphics& _graphics);
 		void resized(const int _newWidth, const int _newHeight);
 
-		const std::vector<BaseTypes::RotaryDial*> GetAllRotaryDials();
-		const std::vector<BaseTypes::LatchButton*> GetAllLatchButtons();
-		const std::vector<BaseTypes::LinearSlider*> GetAllLinearSliders();
-		const std::vector<BaseTypes::CustomLabel*> GetAllCustomLabels();
-		const std::vector<juce::Component*> GetAllCustomControls();
+		const vector<GridResident*> GetAllGridResidents();
 
-		const std::vector<std::vector<juce::Component*>> GetControlGroups();
+		const vector<vector<GridResident*>> GetControlGroups();
 
 		BoundsGrid GenerateGridOfBounds();
 
 	private: /////////////////////////////////////////////////////////////////////////////////////
 
+		unique_ptr<GridResident> m_thresholdSlider;
+		unique_ptr<GridResident> m_ratioDial;
 
-		LevelSlider m_thresholdSlider;
-		RatioDial m_ratioDial;
+		unique_ptr<GridResident> m_masterBypassButton;
+		unique_ptr<GridResident> m_masterGainSlider;
 
-		EngageButton m_masterBypassButton;
-		GainDial m_masterGainSlider;
-
-		TitleLabel m_fineTitleLabel;
-		TitleLabel m_dynTitleLabel;
+		unique_ptr<GridResident> m_fineTitleLabel;
+		unique_ptr<GridResident> m_dynTitleLabel;
 
 		BoundsGrid m_boundsGrid;
 		bool m_isGridUpdated = false;
 
 		const int m_margin = 20;
-		const int m_controlGridSizeX = 10;
-		const int m_controlGridSizeY = 7;
-		const int m_gridSpacingX = 8;
-		const int m_gridSpacingY = 5;
+		const int m_controlGridSizeX = 16;
+		const int m_controlGridSizeY = 9;
+		const int m_gridSpacingX = 0;
+		const int m_gridSpacingY = 0;
 
 		int m_controlAreaWidth;
 		int m_controlAreaHeight;

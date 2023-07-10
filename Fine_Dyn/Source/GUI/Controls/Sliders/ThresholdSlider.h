@@ -18,24 +18,18 @@ namespace GUI::Controls::Sliders
 	/// <summary>
 	///		This class describes a Linear Gain Slider with prebaked customizations for this project.
 	/// </summary>
-	class LevelSlider
+	class ThresholdSlider
 		: public BaseTypes::LinearSlider
 	{
 	public: /////////////////////////////////////////////////////////////////////////////////////
-	 	LevelSlider(
+	 	ThresholdSlider(
 			const float _rangeMin,
 			const float _rangeMax,
 			const float _rangeInterval,
 			const float _defaultValue,
-			juce::String _labelText,
-			const int _xPos,
-			const int _yPos,
-			const int _width,
-			const int _height,
-			const int _paramID,
 			const bool _isVertical,
-	 		juce::LookAndFeel* _lookAndFeel = nullptr);
-	 	~LevelSlider();
+			juce::LookAndFeel* _lookAndFeel);
+	 	~ThresholdSlider();
 	 
 	 	void paint(juce::Graphics& _graphics) override;
 	 

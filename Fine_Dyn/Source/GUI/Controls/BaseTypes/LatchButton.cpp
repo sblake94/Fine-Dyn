@@ -16,34 +16,11 @@ using namespace GUI::Controls::BaseTypes;
 LatchButton::LatchButton
 (
 	juce::String _labelText,
-	const int _xPos,
-	const int _yPos,
-	const int _width,
-	const int _height,
 	const bool _isLatched,
-	const int _paramID,
 	juce::LookAndFeel* _lookAndFeel
 )
 	: juce::ToggleButton()
-	, CustomControlBase(
-		_labelText, 
-		_xPos, 
-		_yPos,
-		_width,
-		_height,
-		_paramID)
 {
-	// Get the value of the parameter from the processor
-	try
-	{
-		const bool state = DSP::Parameters::GetBoolParams().at(_paramID)->get();
-		this->setState(state ? juce::Button::buttonDown : juce::Button::buttonNormal);
-	}
-	catch (const std::exception& e)
-	{
-		DBG(e.what());
-	}
-
 	this->setButtonText(_labelText);
 	this->setComponentID(_labelText);
 	this->setToggleState(_isLatched, juce::sendNotification);

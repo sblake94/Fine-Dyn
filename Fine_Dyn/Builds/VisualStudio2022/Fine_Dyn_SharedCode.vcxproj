@@ -147,7 +147,8 @@
     <ClCompile Include="..\..\Source\GUI\Controls\Dials\RatioDial.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Labels\StaticLabel.cpp" />
     <ClCompile Include="..\..\Source\GUI\Controls\Labels\TitleLabel.cpp" />
-    <ClCompile Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.cpp" />
+    <ClCompile Include="..\..\Source\GUI\Controls\Sliders\ThresholdSlider.cpp" />
+    <ClCompile Include="..\..\Source\GUI\GridResident.cpp" />
     <ClCompile Include="..\..\Source\GUI\LookAndFeels\CustomLookAndFeel.cpp" />
     <ClCompile Include="..\..\Source\PluginProcessor.cpp" />
     <ClCompile Include="..\..\Source\PluginEditor.cpp" />
@@ -2449,7 +2450,6 @@
     <ClInclude Include="..\..\Source\DSP\Parameters.h" />
     <ClInclude Include="..\..\Source\GUI\Background.h" />
     <ClInclude Include="..\..\Source\GUI\ControlManager.h" />
-    <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomControlBase.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\CustomLabel.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LatchButton.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\BaseTypes\LinearSlider.h" />
@@ -2461,7 +2461,8 @@
     <ClInclude Include="..\..\Source\GUI\Controls\Dials\RatioDial.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Labels\StaticLabel.h" />
     <ClInclude Include="..\..\Source\GUI\Controls\Labels\TitleLabel.h" />
-    <ClInclude Include="..\..\Source\GUI\Controls\Sliders\LevelSlider.h" />
+    <ClInclude Include="..\..\Source\GUI\Controls\Sliders\ThresholdSlider.h" />
+    <ClInclude Include="..\..\Source\GUI\GridResident.h" />
     <ClInclude Include="..\..\Source\GUI\LookAndFeels\CustomLookAndFeel.h" />
     <ClInclude Include="..\..\Source\PluginProcessor.h" />
     <ClInclude Include="..\..\Source\PluginEditor.h" />

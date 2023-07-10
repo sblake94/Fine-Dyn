@@ -25,11 +25,6 @@ namespace GUI::Controls::Buttons
 
 		EngageButton(
 			juce::String _labelText,
-			const int _xPos,
-			const int _yPos,
-			const int _width,
-			const int _height,
-			const int _parameterID,
 			bool _isEngaged = false,
 			juce::LookAndFeel* _lookAndFeel = nullptr
 		);

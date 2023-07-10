@@ -15,14 +15,9 @@ GUI::Controls::Labels::StaticLabel::StaticLabel
 )
 	: CustomLabel(
 		_labelText,
-		_xPos,
-		_yPos,
-		_width,
-		_height,
 		juce::Font(12.0f),
 		_textColour,
 		1,
-		_paramID,
 		_lookAndFeel
 	)
 {

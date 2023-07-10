@@ -5,8 +5,8 @@
 using namespace juce;
 using namespace std;
 
-using FloatParamDirectory = std::map<int, juce::AudioParameterFloat*>;
-using BoolParamDirectory = std::map<int, juce::AudioParameterBool*>;
+using FloatParamDirectory = map<int, juce::AudioParameterFloat*>;
+using BoolParamDirectory = map<int, juce::AudioParameterBool*>;
 
 namespace DSP
 {

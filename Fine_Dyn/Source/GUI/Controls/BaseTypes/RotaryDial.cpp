@@ -18,33 +18,16 @@ using namespace GUI::Controls::BaseTypes;
 /// <param name="_lookAndFeel">The LookAndFeel of the Dial</param>
 RotaryDial::RotaryDial
 (
+	juce::String _labelText,
+	juce::String _unitSuffix,
 	const float _rangeMin,
 	const float _rangeMax,
 	const float _rangeInterval,
 	const float _defaultValue,
-	juce::String _labelText,
-	juce::String _unitSuffix,
-	const int _xPos,
-	const int _yPos,
-	const int _width,
-	const int _height,
-	const int _paramID,
 	juce::LookAndFeel* _lookAndFeel
 )
 	: juce::Slider()
-	, CustomControlBase(
-		_labelText, 
-		_xPos, 
-		_yPos, 
-		_width, 
-		_height, 
-		_paramID)
 {
-
-	float value = DSP::Parameters::GetSliderParams().at(_paramID)->get();
-	this->setValue(value);
-
-
 	// Slider Properties
 	this->setName(_labelText);
 	this->setComponentID(_labelText);
